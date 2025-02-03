@@ -1,6 +1,9 @@
 package mini_proj;
 
-public abstract class Task {
+import java.io.Serializable;
+
+public abstract class Task implements Serializable  {
+    private static final long serialVersionUID = 1L;
     private  String title;
     private String description;
     private boolean isComplete=false;
