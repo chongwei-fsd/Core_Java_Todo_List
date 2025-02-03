@@ -47,7 +47,7 @@ public class SearchController {
     }
 
     public void searchByCompletion(TaskManager taskManager, Scanner scanner) {
-        boolean complete=promptCheck.getTrueFalse(scanner,"search for event/task completion (Y/N)");
+        boolean complete=promptCheck.getTrueFalse(scanner,"search for event/task completion (Y-completed, N-not complete)");
         List<Task>tasks=taskManager.searchByComplete(complete);
         displayTasks(tasks);
     }
