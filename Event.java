@@ -1,8 +1,10 @@
 package mini_proj;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Event extends Task {
+public class Event extends Task implements Serializable {
+    private static final long serialVersionUID = 1L;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
