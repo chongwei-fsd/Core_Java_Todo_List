@@ -8,7 +8,7 @@ Task Types:
 <br>
 User Actions:
 <ol>
-<li>Create events, deadline tasks, and floating tasks via CLI</li>
+<li>Create events, deadline tasks, and floating tasks</li>
 <li>Update or delete tasks/events after creation</li>
 </ol>
 <br>
