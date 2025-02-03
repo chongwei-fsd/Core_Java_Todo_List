@@ -1,20 +1,35 @@
 <h3>Core Features:</h3>
 Task Types:
-<ol>
+<ul>
 <li>Events (with start and end times)</li>
 <li>Tasks with deadlines</li>
 <li>Floating tasks (no deadlines)</li>
-</ol>
+</ul>
 <br>
+
 User Actions:
-<ol>
+<ul>
 <li>Create events, deadline tasks, and floating tasks</li>
 <li>Update or delete tasks/events after creation</li>
-</ol>
+</ul>
 <br>
+
 Tracking & Viewing:
-<ol>
+<ul>
 <li>Mark tasks/events as complete or incomplete</li>
 <li>View a summary of all tasks and events</li>
 <li>Find events/tasks based on search terms</li>
-</ol>
+</ul>
+<br>
+
+Search:
+<ul>
+<li>Find events/tasks based on search terms</li>
+</ul>
+<br>
+
+Persistent storage:
+<ul>
+<li>User will be able to save the current state and load it when reopening the application</li>
+</ul>
+<br>
