@@ -17,7 +17,7 @@ public class EventController {
 
         Event event = new Event(eventTitle, eventDesc, false, startTime, endTime);
         taskManager.addTask(event);
-        System.out.println(eventTitle+" added successfully");
+        System.out.println(eventTitle+" added successfully\n");
     }
 
     public void displayEvent(TaskManager taskManager) {
@@ -28,8 +28,7 @@ public class EventController {
                 flag = true;
                 System.out.println("title: " + t.getTitle());
                 System.out.println("description: " + t.getDescription());
-//                System.out.println("complete: " + (t.isComplete() ? "completed" : "not complete"));
-                System.out.println("complete: " + t.isComplete());
+                System.out.println("complete: " + (t.isComplete()?"Complete":"Not complete"));
                 System.out.println("start time: " + ((Event) t).getStartTime());
                 System.out.println("end time: " + ((Event) t).getEndTime()+"\n");
             }
@@ -37,7 +36,6 @@ public class EventController {
         if (!flag) {
             System.out.println("no event added\n");
         }
-        System.out.println();
     }
 
     public void editEvent(TaskManager taskManager, Scanner scanner) {
@@ -45,7 +43,7 @@ public class EventController {
             String eventTitle = promptCheck.getStringInput(scanner, "enter event title:");
             Event event = findEventTitle(taskManager, eventTitle);
             if (event != null) {
-                System.out.println("event title found - " + event.getTitle());
+                System.out.println("event title found - " + eventTitle+"\n");
                 while (true) {
                     menu.editEventMenu(event.getTitle());
                     int choice;
@@ -68,11 +66,62 @@ public class EventController {
                     }
                 }
             }
-            if (event == null) System.out.println(eventTitle + " not found");
+            if (event == null) System.out.println(eventTitle + " not found\n");
 
         } while (true);
     }
 
+
+    public void editEventEndTime(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
+        System.out.println("********* edit event end time *********");
+        LocalDateTime newEndTime = promptCheck.getDateTimeInput(scanner, "enter new event end time yyyy-MM-dd HH:mm");
+        event.setEndTime(newEndTime);
+        System.out.println(eventTitle+" updated\n");
+    }
+
+    public void editEventStartTime(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
+        System.out.println("********* edit event start time *********");
+        LocalDateTime newStartTime = promptCheck.getDateTimeInput(scanner, "enter new event start time yyyy-MM-dd HH:mm");
+        event.setStartTime(newStartTime);
+        System.out.println(eventTitle+" updated\n");
+    }
+
+    public void editEventDesc(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
+        System.out.println("********* edit event description *********");
+        String newEventDesc = promptCheck.getStringInput(scanner, "enter new event description");
+        event.setDescription(newEventDesc);
+        System.out.println(eventTitle+" updated\n");
+    }
+
+    public void editEventCompletion(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
+        System.out.println("********* edit event completion *********");
+        boolean eventComplete = promptCheck.setComplete(scanner, "is event completed? (Y/N)");
+        event.setComplete(eventComplete);
+        System.out.println(event.getTitle()+" set to "+(eventComplete?"complete\n":"not complete\n"));
+    }
+
+    public void editEventTitle(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
+        System.out.println("********* edit event title *********");
+        String newEventTitle = promptCheck.getStringInput(scanner, "enter new event title");
+        event.setTitle(newEventTitle);
+        System.out.println(newEventTitle+" updated\n");
+    }
+
+    public void deleteEvent(TaskManager taskManager, Scanner scanner) {
+        System.out.println("********* delete event *********");
+        while (true){
+            String eventTitle=promptCheck.getStringInput(scanner,"enter event title you wish to delete");
+            Event event=findEventTitle(taskManager,eventTitle);
+            if(event==null){
+                System.out.println(eventTitle+" not found\n");
+            }
+            if(event!=null){
+                taskManager.deleteTask(event);
+                System.out.println(eventTitle+" has been deleted\n");
+                return;
+            }
+        }
+    }
 
     public Event findEventTitle(TaskManager taskManager, String eventTitle) {
         for (Task t : taskManager.getTasks()) {
@@ -83,53 +132,25 @@ public class EventController {
         return null;
     }
 
-    public void editEventEndTime(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
-        System.out.println("********* edit event end time *********");
-        LocalDateTime newEndTime = promptCheck.getDateTimeInput(scanner, "enter new event end time yyyy-MM-dd HH:mm");
-        event.setEndTime(newEndTime);
-    }
-
-    public void editEventStartTime(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
-        System.out.println("********* edit event start time *********");
-        LocalDateTime newStartTime = promptCheck.getDateTimeInput(scanner, "enter new event start time yyyy-MM-dd HH:mm");
-        event.setStartTime(newStartTime);
-    }
-
-    public void editEventDesc(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
-        System.out.println("********* edit event description *********");
-        String updateEventDesc = promptCheck.getStringInput(scanner, "enter new event description");
-        event.setDescription(updateEventDesc);
-    }
-
-    public void editEventCompletion(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
-        System.out.println("********* edit event completion *********");
-        boolean eventComplete = promptCheck.setComplete(scanner, "is event completed? (Y/N)");
-        event.setComplete(eventComplete);
-        System.out.println(event.getTitle()+" set to "+(eventComplete?"complete":"not complete"));
-    }
-
-    public void editEventTitle(TaskManager taskManager, Scanner scanner, String eventTitle, Event event) {
-        System.out.println("********* edit event title *********");
-        String newEventTitle = promptCheck.getStringInput(scanner, "enter new event title");
-        event.setTitle(newEventTitle);
-    }
-
-    public void deleteEvent(TaskManager taskManager, Scanner scanner) {
-        System.out.println("********* delete event *********");
-        String eventTitle;
-        do {
-            eventTitle = promptCheck.getStringInput(scanner, "enter event title you wish to delete");
-            for (Task t : taskManager.getTasks()) {
-                if (t instanceof Event && t.getTitle().equals(eventTitle)) {
-                    taskManager.deleteTask(t);
-                    System.out.println(eventTitle + " found and deleted successfully");
-                    return;
-                } else {
-                    System.out.println(eventTitle + " not found");
+    public void searchEvent(TaskManager taskManager, Scanner scanner) {
+        boolean flag=false;
+        String searchText=promptCheck.getStringInput(scanner,"search for event (title/description)");
+        System.out.println("***************** events **********************");
+        for(Task t:taskManager.getTasks()){
+            if(t instanceof Event){
+                if(t.getTitle().contains(searchText) || t.getDescription().contains(searchText)){
+                    flag=true;
+                    System.out.println("title: "+t.getTitle());
+                    System.out.println("description: "+t.getDescription());
+                    System.out.println("start time: "+((Event) t).getStartTime());
+                    System.out.println("end time: "+((Event) t).getEndTime());
+                    System.out.println("completion: "+(t.isComplete()?"Completed\n":"Not complete\n"));
                 }
             }
-        } while (true);
-
+        }
+        if(!flag){
+            System.out.println(searchText+" not found\n");
+        }
     }
 
 
