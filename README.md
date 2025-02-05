@@ -1,3 +1,4 @@
+<img src="todolist_gui.gif">
 <h3>Core Features:</h3>
 Task Types:
 <ul>
