@@ -33,3 +33,9 @@ Persistent storage:
 <li>User will be able to save the current state and load it when reopening the application</li>
 </ul>
 <br>
+
+Graphical User Interface (GUI):
+<ul>
+<li>User can choose to use GUI on-top of the CLI interface.</li>
+</ul>
+<br>
