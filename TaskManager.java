@@ -43,11 +43,11 @@ public class TaskManager {
     public List<Task> searchByComplete(boolean isComplete) {
         if (isComplete) {
             return tasks.stream()
-                    .filter(t -> t.isComplete() == "complete")
+                    .filter(t -> t.isComplete()==true)
                     .collect(Collectors.toList());
         }
         return tasks.stream()
-                .filter(t -> t.isComplete() == "not complete")
+                .filter(t -> t.isComplete()==false)
                 .collect(Collectors.toList());
     }
 
@@ -66,7 +66,7 @@ public class TaskManager {
     public void saveToFile() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
             oos.writeObject(tasks);
-            System.out.println("Tasks saved successfully.");
+//            System.out.println("Updated tasks.ser");
         } catch (IOException e) {
             System.out.println("Error saving tasks: " + e.getMessage());
         }
