@@ -30,13 +30,13 @@ public abstract class Task implements Serializable  {
         this.description = description;
     }
 
-//    public boolean isComplete() {
-//        return isComplete;
-//    }
-
-    public String isComplete() {
-        return isComplete?"complete":"not complete";
+    public boolean isComplete() {
+        return isComplete;
     }
+
+//    public String isComplete() {
+//        return isComplete?"complete":"not complete";
+//    }
 
     public void setComplete(boolean complete) {
         isComplete = complete;
